@@ -1,0 +1,38 @@
+### 题目要求
+Remove all elements from a linked list of integers that have value val.
+### Example
+Given: 1 --> 2 --> 6 --> 3 --> 4 --> 5 --> 6, val = 6
+Return: 1 --> 2 --> 3 --> 4 --> 5
+### 思路
+- 用单指针的话，头结点和尾节点的情况考虑比较复杂。
+- 考虑使用双指针，设置两个指针，一个指向当前节点，一个指向当前节点的前一个节点。当当前节点的值等于val时，删除该节点，同时更新两个指针所在位置。
+### 代码
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeElements(ListNode* head, int val) {
+        if(head == nullptr) return nullptr;
+        ListNode* ptr = new ListNode(0);
+        ptr->next = head;
+        ListNode* curtr = head;
+        ListNode* pretr = ptr;
+        while(curtr){
+            if(curtr->val == val){
+                pretr->next = curtr->next;
+                curtr = pretr->next;
+            }else{
+                pretr = curtr;
+                curtr = curtr->next;
+            }
+        }
+        return ptr->next;
+    }
+};
